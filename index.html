@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jérémy — AI / ML Engineer</title>
+<meta name="description" content="Portfolio de Jérémy, AI/ML Engineer — systèmes RAG et agents autonomes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink-900: #0E2438;
+    --ink-800: #14304C;
+    --ink-700: #1B3A5C;
+    --line: #E7ECF2;
+    --line-dim: #8FA6BE;
+    --accent: #E8A33D;
+    --accent-dim: #B97B2E;
+    --radius: 3px;
+    --sheet-margin: clamp(16px, 4vw, 48px);
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  }
+
+  body {
+    margin: 0;
+    background: var(--ink-900);
+    color: var(--line);
+    font-family: 'Space Grotesk', sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .mono {
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  /* ---------- Cadre général façon planche technique ---------- */
+
+  .sheet {
+    position: relative;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: var(--sheet-margin);
+    border-left: 1px solid var(--ink-700);
+    border-right: 1px solid var(--ink-700);
+  }
+
+  .corner-mark {
+    position: fixed;
+    width: 18px;
+    height: 18px;
+    border: 1px solid var(--line-dim);
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 5;
+  }
+  .corner-mark.tl { top: 14px; left: 14px; border-right: none; border-bottom: none; }
+  .corner-mark.tr { top: 14px; right: 14px; border-left: none; border-bottom: none; }
+  .corner-mark.bl { bottom: 14px; left: 14px; border-right: none; border-top: none; }
+  .corner-mark.br { bottom: 14px; right: 14px; border-left: none; border-top: none; }
+
+  @media (max-width: 600px) {
+    .corner-mark { display: none; }
+  }
+
+  /* ---------- Hero ---------- */
+
+  .hero {
+    position: relative;
+    padding: 64px 0 48px;
+    border-bottom: 1px solid var(--ink-700);
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--ink-700) 1px, transparent 1px),
+      linear-gradient(90deg, var(--ink-700) 1px, transparent 1px);
+    background-size: 32px 32px;
+    opacity: 0.35;
+    mask-image: linear-gradient(to bottom, black, transparent 85%);
+  }
+
+  .stamp {
+    position: absolute;
+    top: 8px;
+    right: 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    line-height: 1.6;
+    color: var(--accent);
+    border: 1.5px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 8px 12px;
+    transform: rotate(3deg);
+    background: rgba(232, 163, 61, 0.06);
+  }
+  .stamp b { display: block; font-size: 12px; }
+
+  @media (max-width: 640px) {
+    .stamp { position: static; display: inline-block; margin-bottom: 24px; transform: rotate(-1.5deg); }
+  }
+
+  .hero-content { position: relative; z-index: 1; }
+
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3.1rem);
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    max-width: 15ch;
+    margin: 0 0 20px;
+  }
+
+  .lede {
+    max-width: 56ch;
+    font-size: 1.05rem;
+    color: var(--line-dim);
+    margin: 0 0 48px;
+  }
+
+  /* ---------- Diagramme de flux ---------- */
+
+  .diagram-wrap {
+    margin: 0 0 56px;
+    overflow-x: auto;
+  }
+
+  .diagram {
+    min-width: 560px;
+  }
+
+  .diagram text {
+    font-family: 'IBM Plex Mono', monospace;
+    fill: var(--line);
+  }
+  .diagram .label-small { fill: var(--line-dim); font-size: 10px; }
+  .diagram .label-node { font-size: 12px; font-weight: 500; }
+  .diagram .node-box { fill: var(--ink-800); stroke: var(--line-dim); stroke-width: 1; }
+  .diagram .node-box.accent { stroke: var(--accent); }
+  .diagram .flow-line {
+    fill: none;
+    stroke: var(--line-dim);
+    stroke-width: 1.25;
+    stroke-dasharray: 400;
+    stroke-dashoffset: 400;
+    animation: draw 1.4s ease-out forwards;
+  }
+  .diagram .flow-line.delay1 { animation-delay: 0.3s; }
+  .diagram .flow-line.delay2 { animation-delay: 0.6s; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .diagram .flow-line { stroke-dashoffset: 0; animation: none; }
+  }
+
+  /* ---------- Cartouche (title block) ---------- */
+
+  .titleblock {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 28px;
+    border-top: 1px solid var(--ink-700);
+    padding-top: 20px;
+    width: fit-content;
+  }
+
+  .titleblock div { display: flex; flex-direction: column; gap: 3px; }
+
+  .tb-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--line-dim);
+  }
+  .tb-value {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--line);
+  }
+  .tb-value a { color: var(--line); }
+  .tb-value a:hover { color: var(--accent); }
+
+  @media (max-width: 560px) {
+    .titleblock { grid-template-columns: 1fr; gap: 14px; }
+  }
+
+  /* ---------- Sections communes ---------- */
+
+  section { padding: 56px 0; border-bottom: 1px solid var(--ink-700); }
+  section:last-of-type { border-bottom: none; }
+
+  .section-heading {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin: 0 0 36px;
+  }
+  .section-heading h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+  }
+  .section-heading .index {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--line-dim);
+  }
+
+  /* ---------- Projets ---------- */
+
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  .project-card {
+    border: 1px solid var(--ink-700);
+    border-radius: var(--radius);
+    padding: 24px;
+    background: var(--ink-800);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .project-card .mini-diagram {
+    height: 64px;
+  }
+  .project-card .mini-diagram text {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    fill: var(--line-dim);
+  }
+  .project-card .mini-diagram .node {
+    fill: var(--ink-900);
+    stroke: var(--line-dim);
+    stroke-width: 1;
+  }
+  .project-card .mini-diagram line {
+    stroke: var(--line-dim);
+    stroke-width: 1;
+  }
+
+  .project-card h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .project-card p {
+    font-size: 0.92rem;
+    color: var(--line-dim);
+    margin: 0;
+    flex-grow: 1;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--line-dim);
+    border: 1px solid var(--ink-700);
+    border-radius: var(--radius);
+    padding: 3px 8px;
+  }
+
+  .project-link {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    font-weight: 500;
+  }
+
+  .project-card.pending {
+    border-style: dashed;
+    justify-content: center;
+    align-items: flex-start;
+    color: var(--line-dim);
+  }
+  .project-card.pending h3 { color: var(--line-dim); }
+  .project-card.pending .rev {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--accent-dim);
+  }
+
+  /* ---------- Toolkit / légende ---------- */
+
+  .legend {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 32px;
+  }
+
+  .legend-group h4 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    margin: 0 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--ink-700);
+  }
+
+  .legend-group ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .legend-group li {
+    font-size: 0.92rem;
+    color: var(--line);
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .legend-group li::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    background: var(--line-dim);
+    border-radius: 50%;
+    flex-shrink: 0;
+    transform: translateY(-2px);
+  }
+
+  /* ---------- Footer ---------- */
+
+  .sheet-footer {
+    padding: 40px 0 8px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    font-size: 0.95rem;
+  }
+
+  .footer-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--line-dim);
+    text-align: right;
+  }
+
+  @media (max-width: 560px) {
+    .sheet-footer { flex-direction: column; align-items: flex-start; }
+    .footer-meta { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<div class="corner-mark tl"></div>
+<div class="corner-mark tr"></div>
+<div class="corner-mark bl"></div>
+<div class="corner-mark br"></div>
+
+<div class="sheet">
+
+  <header class="hero">
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="hero-content">
+
+      <div class="stamp mono">STATUS<br><b>OPEN TO<br>OPPORTUNITIES</b></div>
+
+      <h1>Je construis les systèmes qui relient les modèles de langage au monde réel.</h1>
+      <p class="lede">
+        AI/ML Engineer. Je conçois des pipelines RAG et des agents outillés —
+        la tuyauterie entre un LLM et ce qui l'entoure : documents, outils,
+        actions.
+      </p>
+
+      <div class="diagram-wrap">
+        <svg class="diagram" viewBox="0 0 720 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schéma: sources de données et outils vers un modèle de langage, vers des actions">
+          <rect class="node-box" x="10" y="45" width="130" height="40" rx="3"></rect>
+          <text class="label-node" x="75" y="69" text-anchor="middle">SOURCES</text>
+          <text class="label-small" x="75" y="30" text-anchor="middle">documents · outils</text>
+
+          <path class="flow-line" d="M140 65 H 290" />
+          <polygon points="290,60 300,65 290,70" fill="var(--line-dim)"></polygon>
+
+          <rect class="node-box accent" x="300" y="40" width="130" height="50" rx="3"></rect>
+          <text class="label-node" x="365" y="70" text-anchor="middle">LLM</text>
+
+          <path class="flow-line delay1" d="M430 65 H 580" />
+          <polygon points="580,60 590,65 580,70" fill="var(--line-dim)"></polygon>
+
+          <rect class="node-box" x="590" y="45" width="120" height="40" rx="3"></rect>
+          <text class="label-node" x="650" y="69" text-anchor="middle">ACTIONS</text>
+          <text class="label-small" x="650" y="30" text-anchor="middle">réponses · tâches</text>
+
+          <path class="flow-line delay2" d="M225 85 V 108 H 505 V 90" />
+          <text class="label-small" x="365" y="122" text-anchor="middle">contexte récupéré + outils appelés</text>
+        </svg>
+      </div>
+
+      <div class="titleblock">
+        <div>
+          <span class="tb-label">NOM</span>
+          <span class="tb-value">JÉRÉMY</span>
+        </div>
+        <div>
+          <span class="tb-label">RÔLE</span>
+          <span class="tb-value">AI / ML ENGINEER</span>
+        </div>
+        <div>
+          <span class="tb-label">GITHUB</span>
+          <span class="tb-value"><a href="https://github.com/lepeutj" target="_blank" rel="noopener">github.com/lepeutj</a></span>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <section id="projects">
+    <div class="section-heading">
+      <h2>Projets</h2>
+      <span class="index mono">03 modules — 2 livrés, 1 en cours</span>
+    </div>
+
+    <div class="project-grid">
+
+      <article class="project-card">
+        <svg class="mini-diagram" viewBox="0 0 260 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect class="node" x="4" y="22" width="52" height="20" rx="2"></rect>
+          <text x="30" y="35" text-anchor="middle">docs</text>
+          <line x1="56" y1="32" x2="86" y2="32"></line>
+          <rect class="node" x="88" y="22" width="60" height="20" rx="2"></rect>
+          <text x="118" y="35" text-anchor="middle">chunks</text>
+          <line x1="148" y1="32" x2="176" y2="32"></line>
+          <rect class="node" x="178" y="22" width="78" height="20" rx="2"></rect>
+          <text x="217" y="35" text-anchor="middle">retrieval</text>
+        </svg>
+        <h3>RAG System</h3>
+        <p>
+          Pipeline de retrieval-augmented generation construit depuis les
+          fondations : chunking récursif maison, providers d'embedding et
+          de LLM interchangeables, store vectoriel persistant. Pensé pour
+          tourner sur un simple VPS.
+        </p>
+        <div class="tags">
+          <span class="tag">Python</span>
+          <span class="tag">FastAPI</span>
+          <span class="tag">ChromaDB</span>
+          <span class="tag">sentence-transformers</span>
+          <span class="tag">Docker</span>
+        </div>
+        <a class="project-link" href="https://github.com/lepeutj/RAG" target="_blank" rel="noopener">Voir le repository ↗</a>
+      </article>
+
+      <article class="project-card">
+        <svg class="mini-diagram" viewBox="0 0 260 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect class="node" x="4" y="22" width="56" height="20" rx="2"></rect>
+          <text x="32" y="35" text-anchor="middle">plan</text>
+          <line x1="60" y1="32" x2="88" y2="32"></line>
+          <rect class="node" x="90" y="22" width="70" height="20" rx="2"></rect>
+          <text x="125" y="35" text-anchor="middle">tool-use</text>
+          <line x1="160" y1="32" x2="188" y2="32"></line>
+          <rect class="node" x="190" y="22" width="66" height="20" rx="2"></rect>
+          <text x="223" y="35" text-anchor="middle">réponse</text>
+          <path d="M125 42 V 52 H 32 V 42" fill="none" stroke-width="1" style="stroke:var(--line-dim)"></path>
+        </svg>
+        <h3>Agent System</h3>
+        <p>
+          Agent autonome avec tool-use natif (function calling structuré,
+          pas de ReAct par parsing de texte), planification explicite et
+          boucle d'exécution entièrement tracée. Outils sandboxés :
+          calculatrice, recherche web, fichiers, exécution Python isolée.
+        </p>
+        <div class="tags">
+          <span class="tag">Python</span>
+          <span class="tag">FastAPI</span>
+          <span class="tag">Anthropic API</span>
+          <span class="tag">function calling</span>
+          <span class="tag">Docker</span>
+        </div>
+        <a class="project-link" href="https://github.com/lepeutj/agent-system" target="_blank" rel="noopener">Voir le repository ↗</a>
+      </article>
+
+      <article class="project-card pending">
+        <span class="rev mono">DRAFT — RÉV. EN COURS</span>
+        <h3>Prochain module</h3>
+        <p>
+          Un nouveau projet est en cours d'élaboration. Le plan n'est pas
+          encore finalisé — la suite est à suivre directement sur GitHub.
+        </p>
+        <a class="project-link" href="https://github.com/lepeutj?tab=repositories" target="_blank" rel="noopener">Voir tous les repositories ↗</a>
+      </article>
+
+    </div>
+  </section>
+
+  <section id="stack">
+    <div class="section-heading">
+      <h2>Outils</h2>
+      <span class="index mono">légende</span>
+    </div>
+
+    <div class="legend">
+      <div class="legend-group">
+        <h4>LANGAGE &amp; API</h4>
+        <ul>
+          <li>Python</li>
+          <li>FastAPI</li>
+          <li>Anthropic API</li>
+          <li>OpenAI API</li>
+        </ul>
+      </div>
+      <div class="legend-group">
+        <h4>ML &amp; RETRIEVAL</h4>
+        <ul>
+          <li>Embeddings (sentence-transformers)</li>
+          <li>ChromaDB</li>
+          <li>Function calling / tool-use</li>
+          <li>Prompt engineering</li>
+        </ul>
+      </div>
+      <div class="legend-group">
+        <h4>INFRA &amp; DÉPLOIEMENT</h4>
+        <ul>
+          <li>Docker</li>
+          <li>VPS (nginx, systemd)</li>
+          <li>Tests (pytest)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer class="sheet-footer">
+    <div class="footer-links">
+      <a href="https://github.com/lepeutj" target="_blank" rel="noopener">GitHub</a>
+      <!-- Remplacer par vos vrais liens -->
+      <a href="https://fr.linkedin.com/in/jeremy-lepeut/fr" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:lepeutj@gmail.com">Email</a>
+    </div>
+    <div class="footer-meta">
+      SHEET 01 — PLUS DE MODULES À VENIR
+    </div>
+  </footer>
+
+</div>
+
+</body>
+</html>
