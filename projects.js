@@ -14,7 +14,14 @@ const projects = [
     tags: ["Python", "FastAPI", "Anthropic API", "function calling", "Docker"],
     diagram: ["plan", "tool use", "response"],
     url: "https://github.com/lepeutj/agent-system"
-  }
+  },
+  {
+  title: "LLM Fine-Tuning Experiment",
+  description: "A reproducible experiment comparing zero-shot, few-shot, and QLoRA fine-tuned language models on bilingual information extraction. Includes a harder dataset with distractors and missing values, strict JSON evaluation, and configurable Hugging Face models and quantization.",
+  tags: ["Python", "PyTorch", "Hugging Face", "QLoRA", "LLM evaluation"],
+  diagram: ["dataset", "baseline vs QLoRA", "evaluation"],
+  url: "https://github.com/lepeutj/llm-finetuning"
+}
 ];
 
 const svgNS = "http://www.w3.org/2000/svg";
