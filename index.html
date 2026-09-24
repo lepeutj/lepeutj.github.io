@@ -3,21 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jérémy — AI Engineer / Data Scientist</title>
-<meta name="description" content="Portfolio of Jérémy, an AI engineer and data scientist with a background in applied mathematics. Generative AI and meeting transcription projects.">
+<title>Jérémy — AI/ML Engineer</title>
+<meta name="description" content="Portfolio of Jérémy, an AI/ML Engineer with a background in applied mathematics and data science.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink-900: #0E2438;
-    --ink-800: #14304C;
-    --ink-700: #1B3A5C;
-    --line: #E7ECF2;
-    --line-dim: #8FA6BE;
-    --accent: #E8A33D;
-    --accent-dim: #B97B2E;
-    --radius: 3px;
+    --ink-900: #151A1E;
+    --ink-800: #1D242A;
+    --ink-700: #323C43;
+    --line: #E8E5DE;
+    --line-dim: #A8B0B4;
+    --accent: #C7A36A;
+    --accent-dim: #A78452;
+    --radius: 5px;
     --sheet-margin: clamp(16px, 4vw, 48px);
   }
 
@@ -39,8 +39,13 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  ::selection {
+    background: var(--accent);
+    color: var(--ink-900);
+  }
+
   a { color: var(--accent); text-decoration: none; }
-  a:hover { text-decoration: underline; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
   a:focus-visible, button:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 3px;
@@ -83,7 +88,7 @@
 
   .hero {
     position: relative;
-    padding: 64px 0 48px;
+    padding: 56px 0 44px;
     border-bottom: 1px solid var(--ink-700);
   }
 
@@ -94,14 +99,49 @@
       linear-gradient(var(--ink-700) 1px, transparent 1px),
       linear-gradient(90deg, var(--ink-700) 1px, transparent 1px);
     background-size: 32px 32px;
-    opacity: 0.35;
+    opacity: 0.2;
     mask-image: linear-gradient(to bottom, black, transparent 85%);
   }
 
-  .stamp {
+  .hero-controls {
     position: absolute;
     top: 8px;
+    left: 0;
     right: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .language-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px;
+    border: 1px solid var(--ink-700);
+    border-radius: var(--radius);
+    background: rgba(21, 26, 30, 0.82);
+    backdrop-filter: blur(6px);
+  }
+
+  .language-switch button {
+    border: 0;
+    border-radius: 2px;
+    padding: 4px 8px;
+    background: transparent;
+    color: var(--line-dim);
+    font: 500 11px/1 'IBM Plex Mono', monospace;
+    cursor: pointer;
+  }
+
+  .language-switch button:hover { color: var(--line); }
+  .language-switch button[aria-pressed="true"] {
+    background: var(--ink-700);
+    color: var(--accent);
+  }
+
+  .stamp {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 11px;
     letter-spacing: 0.06em;
@@ -111,12 +151,13 @@
     border-radius: var(--radius);
     padding: 8px 12px;
     transform: rotate(3deg);
-    background: rgba(232, 163, 61, 0.06);
+    background: rgba(199, 163, 106, 0.07);
   }
   .stamp b { display: block; font-size: 12px; }
 
   @media (max-width: 640px) {
-    .stamp { position: static; display: inline-block; margin-bottom: 24px; transform: rotate(-1.5deg); }
+    .hero-controls { position: static; margin-bottom: 32px; }
+    .stamp { display: inline-block; transform: rotate(-1.5deg); }
   }
 
   .hero-content { position: relative; z-index: 1; }
@@ -128,10 +169,15 @@
     letter-spacing: -0.01em;
     max-width: 15ch;
     margin: 0 0 20px;
+    padding-top: 56px;
+  }
+
+  @media (max-width: 640px) {
+    .hero h1 { padding-top: 0; }
   }
 
   .lede {
-    max-width: 56ch;
+    max-width: 68ch;
     font-size: 1.05rem;
     color: var(--line-dim);
     margin: 0 0 48px;
@@ -205,7 +251,7 @@
 
   /* ---------- Shared sections ---------- */
 
-  section { padding: 56px 0; border-bottom: 1px solid var(--ink-700); }
+  section { padding: 52px 0; border-bottom: 1px solid var(--ink-700); }
   section:last-of-type { border-bottom: none; }
 
   .section-heading {
@@ -227,7 +273,7 @@
 
   /* ---------- About ---------- */
 
-  .about-copy p { max-width: 75ch; margin: 0 0 18px; color: var(--line-dim); }
+  .about-copy p { max-width: 72ch; margin: 0 0 22px; color: var(--line-dim); line-height: 1.68; }
   .about-copy p:first-child { color: var(--line); font-size: 1.08rem; }
   .about-copy p:last-child { margin-bottom: 0; }
 
@@ -244,6 +290,7 @@
     border-radius: var(--radius);
     padding: 24px;
     background: var(--ink-800);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -277,6 +324,7 @@
     font-size: 0.92rem;
     color: var(--line-dim);
     margin: 0;
+    line-height: 1.62;
     flex-grow: 1;
   }
 
@@ -301,49 +349,6 @@
   }
 
   .projects-more { margin: 24px 0 0; font-size: 0.9rem; color: var(--line-dim); }
-
-  /* ---------- Toolkit ---------- */
-
-  .legend {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 32px;
-  }
-
-  .legend-group h4 {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    color: var(--accent);
-    margin: 0 0 14px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--ink-700);
-  }
-
-  .legend-group ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .legend-group li {
-    font-size: 0.92rem;
-    color: var(--line);
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
-  }
-  .legend-group li::before {
-    content: "";
-    width: 5px;
-    height: 5px;
-    background: var(--line-dim);
-    border-radius: 50%;
-    flex-shrink: 0;
-    transform: translateY(-2px);
-  }
 
   /* ---------- Footer ---------- */
 
@@ -388,20 +393,22 @@
     <div class="hero-grid" aria-hidden="true"></div>
     <div class="hero-content">
 
-      <div class="stamp mono">STATUS<br><b>OPEN TO<br>OPPORTUNITIES</b></div>
+      <div class="hero-controls">
+        <div class="language-switch" role="group" aria-label="Language">
+          <button type="button" data-lang="en" aria-pressed="true">EN</button>
+          <button type="button" data-lang="fr" aria-pressed="false">FR</button>
+        </div>
+        <div class="stamp mono"><span data-i18n="statusLabel">STATUS</span><b data-i18n="statusValue">OPEN TO OPPORTUNITIES</b></div>
+      </div>
 
-      <h1>AI Engineer / Data Scientist</h1>
-      <p class="lede">
-        With a background in applied mathematics, I like understanding how
-        models work and what it takes to make them useful in an application.
-        My current focus is generative AI.
-      </p>
+      <h1>AI/ML Engineer</h1>
+      <p class="lede" data-i18n="heroIntro">I’m Jérémy, an AI/ML Engineer with a background in applied mathematics and data science. I like understanding a problem, working with the data, and choosing suitable methods before building a solution.</p>
 
       <div class="diagram-wrap">
         <svg class="diagram" viewBox="0 0 720 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram: data sources and tools feed a language model, which produces responses and actions">
           <rect class="node-box" x="10" y="45" width="130" height="40" rx="3"></rect>
-          <text class="label-node" x="75" y="69" text-anchor="middle">SOURCES</text>
-          <text class="label-small" x="75" y="30" text-anchor="middle">documents · tools</text>
+          <text class="label-node" x="75" y="69" text-anchor="middle" data-i18n="diagramSources">SOURCES</text>
+          <text class="label-small" x="75" y="30" text-anchor="middle" data-i18n="diagramInputs">documents · tools</text>
 
           <path class="flow-line" d="M140 65 H 290" />
           <polygon points="290,60 300,65 290,70" fill="var(--line-dim)"></polygon>
@@ -413,22 +420,22 @@
           <polygon points="580,60 590,65 580,70" fill="var(--line-dim)"></polygon>
 
           <rect class="node-box" x="590" y="45" width="120" height="40" rx="3"></rect>
-          <text class="label-node" x="650" y="69" text-anchor="middle">ACTIONS</text>
-          <text class="label-small" x="650" y="30" text-anchor="middle">responses · tasks</text>
+          <text class="label-node" x="650" y="69" text-anchor="middle" data-i18n="diagramActions">ACTIONS</text>
+          <text class="label-small" x="650" y="30" text-anchor="middle" data-i18n="diagramOutputs">responses · tasks</text>
 
           <path class="flow-line delay2" d="M225 85 V 108 H 505 V 90" />
-          <text class="label-small" x="365" y="122" text-anchor="middle">retrieved context + tool calls</text>
+          <text class="label-small" x="365" y="122" text-anchor="middle" data-i18n="diagramContext">retrieved context + tool calls</text>
         </svg>
       </div>
 
       <div class="titleblock">
         <div>
-          <span class="tb-label">NAME</span>
+          <span class="tb-label" data-i18n="nameLabel">NAME</span>
           <span class="tb-value">JÉRÉMY</span>
         </div>
         <div>
-          <span class="tb-label">ROLE</span>
-          <span class="tb-value">AI ENGINEER / DATA SCIENTIST</span>
+          <span class="tb-label" data-i18n="roleLabel">ROLE</span>
+          <span class="tb-value">AI/ML ENGINEER</span>
         </div>
         <div>
           <span class="tb-label">GITHUB</span>
@@ -441,61 +448,25 @@
 
   <section id="about">
     <div class="section-heading">
-      <h2>About</h2>
-      <span class="index mono">background &amp; approach</span>
+      <h2 data-i18n="aboutTitle">About</h2>
+      <span class="index mono" data-i18n="aboutSubtitle">background &amp; approach</span>
     </div>
     <div class="about-copy">
-      <p>My background is in applied mathematics, and I now focus on AI and data-driven applications. LLMs feature heavily in my current projects, alongside broader interests in supervised and unsupervised learning, signal processing, and machine learning systems.</p>
-      <p>I enjoy building things end to end and understanding how they work under the hood. One of my earlier projects was a meeting transcription application, which I developed independently. It required me to make architectural choices, deal with imperfect real-world data, solve unexpected technical problems, and work within practical constraints.</p>
-      <p>Today, I’m particularly interested in LLM-based applications: how models can be adapted, integrated into useful systems, evaluated, and deployed reliably. I also enjoy working across the surrounding engineering stack, from Python applications and APIs to deployment and infrastructure.</p>
-      <p>Alongside AI, I have a growing interest in cybersecurity, especially where it intersects with software, networks, data, and automation.</p>
-      <p>I’m currently building and publishing personal projects to strengthen my practical experience and showcase the way I approach technical problems: understand the fundamentals, experiment, build, measure, and improve.</p>
+      <p data-i18n="about1">I have worked with a wide range of data, including tabular data, text, documents, audio, and time series. Much of the work often consists of exploring, cleaning, transforming, or anonymising that data. This has allowed me to develop skills in data analysis and data engineering alongside machine learning.</p>
+      <p data-i18n="about2">I work mainly in Python and am as interested in models as I am in what makes them usable in practice: APIs, databases, Docker, Linux, cloud services, and deployment. In particular, I developed an end-to-end meeting transcription and summarisation application, from data processing through to deployment.</p>
+      <p data-i18n="about3">I am currently exploring LLMs, RAG, agents, and fine-tuning, not as answers to every problem, but as tools that can help build suitable solutions.</p>
+      <p data-i18n="about4">I also pay close attention to privacy and control over data. I am interested in open source and self-hosted solutions, while pragmatically using cloud services and proprietary tools when they are the right fit.</p>
+      <p data-i18n="about5">My background in teaching taught me how to communicate, explain complex ideas clearly, and adapt to different audiences. Curious and quick to learn, I am now looking to join a team where I can contribute my skills while continuing to grow alongside more experienced colleagues.</p>
     </div>
   </section>
 
   <section id="projects">
     <div class="section-heading">
-      <h2>Projects</h2>
+      <h2 data-i18n="projectsTitle">Projects</h2>
       <span class="index mono" id="project-count">personal projects</span>
     </div>
     <div class="project-grid" id="project-grid"></div>
-    <p class="projects-more">More projects are on the way. <a href="https://github.com/lepeutj?tab=repositories" target="_blank" rel="noopener">See all my GitHub repositories ↗</a></p>
-  </section>
-
-  <section id="stack">
-    <div class="section-heading">
-      <h2>Tools</h2>
-      <span class="index mono">toolkit</span>
-    </div>
-
-    <div class="legend">
-      <div class="legend-group">
-        <h4>LANGUAGE &amp; APIs</h4>
-        <ul>
-          <li>Python</li>
-          <li>FastAPI</li>
-          <li>Anthropic API</li>
-          <li>OpenAI API</li>
-        </ul>
-      </div>
-      <div class="legend-group">
-        <h4>ML &amp; RETRIEVAL</h4>
-        <ul>
-          <li>Embeddings (sentence-transformers)</li>
-          <li>ChromaDB</li>
-          <li>Function calling / tool-use</li>
-          <li>Prompt engineering</li>
-        </ul>
-      </div>
-      <div class="legend-group">
-        <h4>INFRASTRUCTURE &amp; DEPLOYMENT</h4>
-        <ul>
-          <li>Docker</li>
-          <li>VPS (nginx, systemd)</li>
-          <li>Tests (pytest)</li>
-        </ul>
-      </div>
-    </div>
+    <p class="projects-more"><span data-i18n="moreProjects">More projects are on the way.</span> <a href="https://github.com/lepeutj?tab=repositories" target="_blank" rel="noopener" data-i18n="allRepositories">See all my GitHub repositories ↗</a></p>
   </section>
 
   <footer class="sheet-footer">
@@ -503,16 +474,17 @@
       <a href="https://github.com/lepeutj" target="_blank" rel="noopener">GitHub</a>
       <!-- Replace with your own links if needed -->
       <a href="https://fr.linkedin.com/in/jeremy-lepeut/fr" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="mailto:lepeutj@gmail.com">Email</a>
+      <a href="mailto:lepeutj@gmail.com" data-i18n="emailLabel">Email</a>
     </div>
     <div class="footer-meta">
-      SHEET 01 — BACKGROUND &amp; PROJECTS
+      <span data-i18n="footerMeta">SHEET 01 — BACKGROUND &amp; PROJECTS</span>
     </div>
   </footer>
 
 </div>
 
 <script src="projects.js"></script>
+<script src="i18n.js"></script>
 
 </body>
 </html>
