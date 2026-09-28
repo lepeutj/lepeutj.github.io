@@ -2,6 +2,32 @@
 // The three short labels in "diagram" form the diagram at the top of the card.
 const projects = [
   {
+    title: {
+      en: "Heart of the Swarm — Dynamic Agent Runtime",
+      fr: "Heart of the Swarm — Runtime d’agents dynamiques"
+    },
+    description: {
+      en: "A configurable platform for designing, validating, and running AI agents from a web interface. It combines a FastAPI server, LangGraph execution, an extensible tool registry, OpenAI and OpenRouter model providers, asynchronous workers, persistent agent configurations, and detailed usage and execution tracking with PostgreSQL and MLflow. The complete stack is packaged with Docker.",
+      fr: "Une plateforme configurable permettant de concevoir, valider et exécuter des agents IA depuis une interface web. Elle combine un serveur FastAPI, une exécution avec LangGraph, un registre d’outils extensible, les fournisseurs de modèles OpenAI et OpenRouter, des workers asynchrones, la persistance des configurations d’agents ainsi qu’un suivi détaillé des usages et des exécutions avec PostgreSQL et MLflow. L’ensemble de la plateforme est packagé avec Docker."
+    },
+    tags: [
+      "Python",
+      "FastAPI",
+      "LangGraph",
+      "PostgreSQL",
+      "MLflow",
+      "Docker",
+      "OpenAI",
+      "OpenRouter",
+      "AI Agents"
+    ],
+    diagram: {
+      en: ["Config", "Runtime", "Tracing"],
+      fr: ["Config", "Runtime", "Suivi"]
+    },
+    url: "https://github.com/lepeutj/heart_of_the_swarm"
+  },
+  {
     title: { en: "RAG System", fr: "Système RAG" },
     description: {
       en: "A retrieval-augmented generation pipeline built from the ground up: custom recursive chunking, interchangeable embedding and LLM providers, and persistent vector storage. Designed to run on a basic VPS.",
